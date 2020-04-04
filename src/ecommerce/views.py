@@ -8,7 +8,8 @@ from .forms import ContactForm, LoginForm, RegisterForm
 def home_page(request):
 	context = {
 		"title": "Ecommerce",
-		"content": "Welcome to EzCommerce",
+		"brand": "eZCommerce",
+		"content": "Welcome to EzCommerce Homepage",
 		"premium_content": "YEAAAHHH boi!",
 	}
 	return render(request, "home_page.html", context)
@@ -16,8 +17,9 @@ def home_page(request):
 def contact_page(request):
 	contact_form = ContactForm(request.POST or None)
 	context = {
-		"title": "Ecommerce",
-		"content": "Welcome to EzCommerce",
+		"title": "Contact",
+		"brand": "eZCommerce",
+		"content": "Contact Page",
 		"form": contact_form
 	}
 	if contact_form.is_valid():

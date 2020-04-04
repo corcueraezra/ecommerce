@@ -17,15 +17,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # from django.conf.urls import url
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
 
-from products.views import (
-    product_list, 
-    product_detail,
-    product_featured_list,
-    product_slug_detail,
-    )
 from .views import home_page, contact_page, login_page, register_page	
 
 urlpatterns = [
@@ -37,14 +31,16 @@ urlpatterns = [
     # url('products/', product_list),
 
     path('admin/', admin.site.urls),
-    path('home/', home_page),
-    path('contact/', contact_page),
-    path('login/', login_page),
-    path('register/', register_page),
-    path('products/', product_list),
-    path('products/<int:id>/', product_detail),
-    path('featured/', product_featured_list),
-    path('products/<slug:slug>/', product_slug_detail),
+    path('home/', home_page, name='home'),
+    path('contact/', contact_page, name='contact'),
+    path('login/', login_page, name='login'),
+    path('products/', include("products.urls", namespace="products")),
+    path('register/', register_page, name='register'),
+    path('search/', include("search.urls", namespace="search")),
+    # path('products/', product_list),
+    # path('products/<int:id>/', product_detail),
+    # path('featured/', product_featured_list),
+    # path('products/<slug:slug>/', product_slug_detail),
 ]
 
 if settings.DEBUG:

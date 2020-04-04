@@ -3,6 +3,7 @@ import os
 from django.db import models
 from django.db.models.signals import pre_save,post_save
 from .utils import unique_slug_generator
+from django.urls import reverse
 
 def get_file_path(instance, filename):
 	ext = filename.split('.')[-1]
@@ -33,9 +34,14 @@ class Product(models.Model):
 	image		= models.FileField(upload_to=get_file_path, null=True, blank=True)
 	featured	= models.BooleanField(default=False)
 	active		= models.BooleanField(default=True)
+	timestamp	= models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
 		return self.title
+
+	def get_absolute_url(self):
+		# return "/products/{slug}/".format(slug=self.slug)
+		return reverse("products:detail", kwargs={"slug": self.slug})
 
 def product_pre_save_receiver(sender,instance, *args, **kwargs):
 	if not instance.slug:
